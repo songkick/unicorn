@@ -272,6 +272,7 @@ class Unicorn::HttpServer
         maintain_worker_count if respawn
         master_sleep(sleep_time)
       when :QUIT # graceful shutdown
+        LISTENERS.each { |l| l.shutdown() }
         break
       when :TERM, :INT # immediate shutdown
         stop(false)
